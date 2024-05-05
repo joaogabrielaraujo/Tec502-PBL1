@@ -1,8 +1,12 @@
 # Use a imagem oficial do Nginx como base
 FROM nginx:latest
 
-# Copie o arquivo HTML para o diretório padrão do Nginx
-COPY ./interface.html /usr/share/nginx/html
+# Define o diretório de trabalho como o diretório padrão do Nginx
+WORKDIR /usr/share/nginx/html
+
+# Copie os arquivos HTML e CSS para o diretório padrão do Nginx
+COPY interface.html ./
+COPY general.css ./
 
 # Exponha a porta 80 para permitir o acesso ao Nginx
-EXPOSE 8080
+EXPOSE 80
