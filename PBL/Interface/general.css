@@ -1,0 +1,78 @@
+
+
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align:left;
+}
+
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #007bff; /* Azul */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0056b3; /* Azul mais escuro */
+}
+
+.device-info {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+
+.device-info {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.device-info h3 {
+  margin-top: 0;
+}
+
+.device-info p {
+  margin: 5px 0;
+}
+
+label {
+  margin-right: 10px;
+}
+
+select {
+  margin-right: 10px;
+}
+
+.temperatura-container {
+  display: flex;
+  align-items: center;
+}
+
+.temperatura-container select,
+.temperatura-container button {
+  margin-right: 10px;
+}
