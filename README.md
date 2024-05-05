@@ -64,6 +64,9 @@ Gerenciamento de Conexão TCP: O dispositivo.py implementa uma lógica de recone
 - É necessário acessar o html em um navegador
 
 - Deve-se verificar se a interface está configurada com o URL e porta corretas
+<div>
+  <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/tela.jpg">
+</div>
 
 - Clique no botão de Obter lista de Dispositivos
 
