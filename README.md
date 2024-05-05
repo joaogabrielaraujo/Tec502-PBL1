@@ -27,8 +27,11 @@ Botões de Controle: Para cada dispositivo listado, há botões de controle, com
 O broker.py desempenha um papel central no sistema, facilitando a comunicação entre a interface HTML e os dispositivos de ar condicionado. Aqui está uma explicação detalhada das principais funcionalidades do broker.py:
 
 Gestão de Conexões TCP e UDP: O broker.py utiliza sockets TCP e UDP para se comunicar com os dispositivos de ar condicionado. Ele estabelece conexões TCP com os dispositivos para enviar comandos e recebe atualizações de status, enquanto utiliza o UDP para receber atualizações de status dos dispositivos.
+
 Processamento de Mensagens HTTP e UDP: Quando a interface HTML envia uma solicitação HTTP, o broker.py a recebe e a processa. Ele extrai as informações relevantes da mensagem, como o tipo de comando (ligar, desligar, modificar temperatura) e o endereço IP do dispositivo alvo, e encaminha essas informações para o dispositivo apropriado via TCP. O broker.py também recebe mensagens UDP dos dispositivos de ar condicionado, contendo atualizações de status. Ele processa essas mensagens, atualiza a lista de dispositivos conectados e suas informações de estado e temperatura, e fornece essas informações à interface HTML para exibição.
+
 Gestão de Filas de Mensagens: Para lidar com o envio e recebimento assíncrono de mensagens, o broker.py utiliza filas de mensagens. As mensagens recebidas via UDP são colocadas em uma fila para processamento posterior, enquanto as mensagens HTTP recebidas da interface HTML são colocadas em outra fila para envio aos dispositivos via TCP.
+
 ### 3. Dispositivo.py:
 O dispositivo.py representa um dispositivo de ar condicionado simulado que se comunica com o broker.py para enviar seu status e receber comandos de controle. Aqui está uma explicação mais detalhada das principais funcionalidades do dispositivo.py:
 
