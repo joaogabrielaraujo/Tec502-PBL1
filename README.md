@@ -41,4 +41,37 @@ Recepção de Comandos via TCP: O dispositivo.py também fica aguardando por com
 Tratamento de Mensagens TCP: Quando recebe uma mensagem TCP do broker.py, o dispositivo.py a decodifica e executa a ação correspondente. Por exemplo, se receber o comando "ligar", ele altera seu estado para "ligado". Da mesma forma, se receber o comando "desligar", altera seu estado para "desligado". Se receber o comando "modificar temperatura", ajusta a temperatura conforme especificado na mensagem.
 
 Gerenciamento de Conexão TCP: O dispositivo.py implementa uma lógica de reconexão para lidar com falhas na conexão TCP com o broker.py. Se a conexão for perdida, ele tenta reconectar automaticamente ao broker.py após um intervalo de tempo, garantindo uma comunicação contínua.
+
+## Como Utilizar o Projeto
+### Primeiro passo: Inicialização Broker
+- É necessário a instalação das bibliotecas dependentes nesse caso os com o seguintes comando no prompt de comando:
+  ```
+   pip install Flask
+   pip install flask-cors
+  ```
+
+- Execute o código broker em um ambiente ou idle compátivel com python
+- Deve-se verificar se as constantes de conexão estão corretas para que o servidor broker seja inicializado corretamente
+
+### Segundo passo: Inicialização do(s) Dispositivo(s) envolvido(s)
+- Execute o código que simula um ar condicionado em um ambiente ou idle que seja compatível com python
+
+- Deve-se verificar se as constantes de conexão do dispositivo estão iguais ao do servidor para prosseguir
+
+- O Dispositivo começará a funcionar quando sua conexão for aceita pelo servidor além de exibir o menu via terminal que pode ser controlado também como via de controle manual
+
+### Último passo: Inicialização da interface gráfica
+- É necessário acessar o html em um navegador
+
+- Deve-se verificar se a interface está configurada com o URL e porta corretas
+
+- Clique no botão de Obter lista de Dispositivos
+
+- Utilize os botões de controle para ligar/desligar o dispositivo
+
+- Utilize a caixa de seleção de temperatura e em seguida o botão Enviar Temperatura para modificar a temperatura
+
+- É necessário ressaltar que não é impossível alterar a temperatura de um dispositivo desligado
+
+
 </div>
