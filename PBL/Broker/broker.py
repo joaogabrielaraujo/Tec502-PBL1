@@ -33,6 +33,7 @@ http_messages = queue.Queue()
 def Registrar_dipositivo_TCP(client_socket, address): 
     print(f"Conexão TCP estabelecida com {address}")
     dispositivo = {"socket": client_socket,  "ip": address[0], "porta_tcp": address[1], "estado": "desligado", "temperatura": 0}
+    dispositivo["socket"].settimeout(10)
     clientes_tcp.append(dispositivo)
     print("Clientes TCP:", clientes_tcp)
 
@@ -42,7 +43,12 @@ def verificar_conexao_dispositivos():
         for dispositivo in clientes_tcp:
             try:
                 # Enviar uma mensagem de verificação para o dispositivo
-                dispositivo['socket'].send(bytes("Verificando",'utf-8'))
+                dispositivo['socket'].send(bytes("verificando",'utf-8'))
+                mensagem = dispositivo['socket'].recv(1024).decode()
+                if mensagem != "online":
+                    clientes_tcp.remove(dispositivo)
+                elif not mensagem:
+                    clientes_tcp.remove(dispositivo)
             except Exception as e:
                 print(f"Erro: {e}")
                 print(f"Conexão perdida com {dispositivo['ip']}:{dispositivo['porta_tcp']}")
@@ -50,7 +56,7 @@ def verificar_conexao_dispositivos():
                 print("Clientes TCP atualizados:", clientes_tcp)
         
         # Aguardar um tempo antes da próxima verificação
-        time.sleep(20)  # Verificar a conexão a cada 20 segundos
+        time.sleep(8)  # Verificar a conexão a cada 8 segundos
 
 
 # Função para armazenar as mensagens que chegam via udp em uma fila

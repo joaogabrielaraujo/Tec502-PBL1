@@ -15,12 +15,13 @@
 
     <script>
         // Definindo variáveis globais para a URL e a porta das rotas
-        const BASE_URL = "http://127.0.0.1";
+        const BASE_URL = "http://172.16.103.6";
+        //const BASE_URL = "http://127.0.0.1";
         const PORT = 5005;
 
         async function getAndDisplayTcpClients() {
             getTcpClients();
-            setInterval(getTcpClients, 5000); // Atualiza a cada 2 segundos
+            setInterval(getTcpClients, 7000); // Atualiza a cada 2 segundos
         }
 
         async function getTcpClients() {
@@ -51,8 +52,8 @@
                     <p>Porta TCP: ${device.porta_tcp}</p>
                     <p>Estado: ${device.estado}</p>
                     <p>Temperatura: ${device.temperatura}°C</p>
-                    <label for="temperatura">Nova Temperatura:</label>
-                    <select id="temperatura" name="temperatura">
+                    <label for="temperatura_${device.ip}_${device.porta_tcp}">Nova Temperatura:</label>
+                    <select id="temperatura_${device.ip}_${device.porta_tcp}" name="temperatura">
                         <option value="15">15°C</option>
                         <option value="16">16°C</option>
                         <option value="17">17°C</option>
@@ -67,7 +68,7 @@
                         <option value="30">30°C</option>
                         <!-- Adicione mais opções conforme necessário -->
                     </select>
-                    <button onclick="enviarTemperatura('${device.estado}')">Enviar Temperatura</button>
+                    <button onclick="enviarTemperatura('${device.ip}',${device.porta_tcp},'${device.estado}')">Enviar Temperatura</button>
                     <button onclick="onDevice('${device.ip}', ${device.porta_tcp}, ${device.temperatura})">Ligar</button>
                     <button onclick="offDevice('${device.ip}', ${device.porta_tcp}, ${device.temperatura})">Desligar</button>
                     
@@ -120,14 +121,16 @@
                 alert("Erro ao fazer a solicitação: " + error.message);
             }
       }
-      async function enviarTemperatura(estado) {
+      async function enviarTemperatura(ip,port,estado) {
         try {
             if (estado === "desligado") {
                 throw new Error("O dispositivo está desligado.");
             }
-            const novaTemperaturaElement = document.getElementById("temperatura");
+            const novaTemperaturaElement = document.getElementById(`temperatura_${ip}_${port}`);
             const novaTemperatura = novaTemperaturaElement.value;
-            const message = `comando_para_dispositivo-127.0.0.1-9999-temperatura-${novaTemperatura}`;
+            //const message = 'comando_para_dispositivo-' ip '-9999-temperatura-${novaTemperatura}';
+            const message = 'comando_para_dispositivo-' + ip + '-' + port + '-temperatura' + "-" + `${novaTemperatura}`;
+            //const message = `comando_para_dispositivo-127.0.0.1-9999-temperatura-${novaTemperatura}`;
             const response = await fetch(`${BASE_URL}:${PORT}/send-message/`, {
                 method: "POST",
                 headers: {

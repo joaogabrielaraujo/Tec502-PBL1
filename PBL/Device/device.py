@@ -5,10 +5,9 @@ import os
 import socket
 
 # Constantes utilizadas para a conexão com o servidor
-SERVER_IP = '127.0.0.1'
-SERVER_PORT_UDP = 8889
-SERVER_PORT_TCP = 9999
-
+SERVER_IP = os.getenv("SERVER_IP",'127.0.0.1')
+SERVER_UDP_PORT =  int(os.getenv("SERVER_UDP_PORT", "8889"))
+SERVER_TCP_PORT =  int(os.getenv("SERVER_TCP_PORT", "9999"))
 
 
 #incialização do socket UDP
@@ -33,7 +32,7 @@ def envio_informações():
             estado = ["estado"]
             temperatura = Ar_condicionado["temperatura"]
             mensagem = f"status-{estado}-{temperatura}"
-            envio_mensagem_udp(mensagem, SERVER_IP, SERVER_PORT_UDP)
+            envio_mensagem_udp(mensagem, SERVER_IP, SERVER_UDP_PORT)
             time.sleep(2)  
     thread = threading.Thread(target=enviar)
     thread.start() 
@@ -51,7 +50,8 @@ def tente_conectar_broker_tcp(server_ip, server_port_tcp):
             #Tenta conectar ao servidor 
             global tcp_socket
             tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            tcp_socket.connect((server_ip, server_port_tcp)) 
+            tcp_socket.connect((server_ip, server_port_tcp))
+            tcp_socket.settimeout(15)
             print("Sucesso ao conectar") 
             break
         except socket.error as e:
@@ -60,7 +60,9 @@ def tente_conectar_broker_tcp(server_ip, server_port_tcp):
                 time.sleep(3)
                 print("Tentando Reconexão...")
             else:
-                print(f"Falha ao conectar ao servidor via TCP: {e}")  
+                print("O Servidor ainda não está no ar")
+                time.sleep(3)
+                print("Tentando Reconexão...")
 
 # Função para tratar mensagens recebidas via TCP
 def tratando_mensagens_tcp(): 
@@ -75,9 +77,10 @@ def tratando_mensagens_tcp():
             receptor_mensagens(partes)
         except ConnectionResetError:
             print("A conexão com o servidor foi redefinida pelo servidor. Aguarde o servidor estar no ar novamente") 
-            tente_conectar_broker_tcp(SERVER_IP, SERVER_PORT_TCP)
+            tente_conectar_broker_tcp(SERVER_IP, SERVER_TCP_PORT)
         except Exception as e:
             print(f"Erro ao processar mensagem TCP: {e}")
+            tente_conectar_broker_tcp(SERVER_IP, SERVER_TCP_PORT)
             time.sleep(3)
 
 
@@ -111,6 +114,8 @@ def receptor_mensagens(partes):
             exit()
         else:
             print("Comando inválido")
+    elif tipo_mensagem == 'verificando':
+        tcp_socket.send(bytes(f"online", "utf-8"))
              
 def receptor_mensagens_menu(mensagem): 
     if mensagem == '1':
@@ -139,7 +144,7 @@ def envio_informações():
                 temperatura = Ar_condicionado["temperatura"]
                 
                 mensagem = f"status-{estado}-{temperatura}"
-                envio_mensagem_udp(mensagem, SERVER_IP, SERVER_PORT_UDP)
+                envio_mensagem_udp(mensagem, SERVER_IP, SERVER_UDP_PORT)
                 time.sleep(2)  
             except Exception as e:
                 print(f"Erro ao enviar mensagem UDP: {e}") 
@@ -166,7 +171,7 @@ def main():
     try:
         # Inicia o servidor TCP em uma thread separada
         
-        tente_conectar_broker_tcp(SERVER_IP, SERVER_PORT_TCP)
+        tente_conectar_broker_tcp(SERVER_IP, SERVER_TCP_PORT)
 
         receive_thread = threading.Thread(target=tratando_mensagens_tcp)
         receive_thread.start()

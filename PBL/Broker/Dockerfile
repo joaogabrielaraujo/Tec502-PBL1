@@ -14,7 +14,7 @@ RUN pip install flask-cors
 
 # Define as variáveis de ambiente
 ENV IP=127.0.0.1
-ENV SERVER_UDP_PORT=8888
+ENV SERVER_UDP_PORT=8889
 ENV SERVER_TCP_PORT=9999
 
 
