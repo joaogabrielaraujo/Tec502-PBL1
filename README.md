@@ -4,48 +4,85 @@
   <br>
 </h1>
 
-<div>
 
+# Broker
+O Broker é o componente central deste sistema, desempenhando um papel vital como intermediário na comunicação entre as interfaces e os dispositivos. Ele é responsável por facilitar a troca de mensagens entre essas duas entidades principais, garantindo uma comunicação eficaz e confiável.
 
-## Comunicação entre os Componentes:
-O sistema é composto por três partes principais: a interface HTML, o broker.py e o dispositivo.py. A comunicação entre esses componentes é fundamental para o funcionamento adequado do sistema.
+### Funcionalidades do Broker:
+* Registro de Dispositivos Conectados:
+     O Broker mantém uma lista de dispositivos que conseguiram estabelecer conexão com sucesso. Cada dispositivo conectado é registrado em uma estrutura de dados, contendo informações como o socket de conexão, endereço IP, porta TCP utilizada, estado atual do dispositivo e sua temperatura.
+* Comunicação Bidirecional:
+    O Broker atua como um intermediário para a comunicação bidirecional entre as interfaces e os dispositivos. Ele recebe mensagens das interfaces, encaminha para os dispositivos relevantes e vice-versa, garantindo uma troca contínua de informações.
+*  Processamento de Mensagens UDP:
+    O Broker inicializa e aguarda mensagens UDP dos dispositivos conectados. Quando uma mensagem é recebida, ela é colocada em uma fila para processamento. As mensagens são então tratadas e processadas, permitindo que o Broker interprete e aja com base nas informações recebidas.
 
-## Interface HTML e Broker.py:
+* Verificação de Conexão:
+    Periodicamente, o Broker verifica a conexão com cada dispositivo na lista. Isso é feito enviando uma mensagem TCP para cada dispositivo e aguardando uma resposta. Se o dispositivo não responder, é considerado offline e removido da lista de dispositivos conectados.
 
-A interface HTML envia solicitações HTTP para o broker.py para enviar comandos aos dispositivos de ar condicionado e receber atualizações de status. O broker.py recebe essas solicitações HTTP, processa-as e encaminha os comandos para os dispositivos conectados via TCP. Além disso, o broker.py também recebe atualizações de status dos dispositivos via UDP e atualiza a interface HTML com as informações mais recentes.
+# Dispositivo
+O Dispositivo é uma representação virtual de um ar condicionado no ambiente de software. Ele simula as funcionalidades básicas de um ar condicionado, como ligar, desligar e ajustar a temperatura, e comunica-se com o Broker para troca de informações.
 
-## Broker.py e Dispositivo.py:
-O broker.py atua como intermediário entre a interface HTML e os dispositivos de ar condicionado. Ele recebe comandos da interface HTML e os envia para os dispositivos conectados via TCP. O dispositivo.py, por sua vez, simula um dispositivo de ar condicionado e se comunica com o broker.py para enviar seu status (estado e temperatura) via UDP e receber comandos de controle (ligar, desligar, modificar temperatura) via TCP. Essa comunicação é essencial para garantir que os dispositivos de ar condicionado possam ser controlados de forma remota e que a interface HTML exiba informações precisas sobre o estado e a temperatura desses dispositivos em tempo real.
+### Funcionalidades do Dispositivo:
+* Emulação do Ar Condicionado:
+O Dispositivo emula as operações de um ar condicionado, permitindo que o usuário controle remotamente suas funcionalidades. Isso é feito através de uma interface CLI, onde o usuário pode enviar comandos para ligar, desligar e modificar a temperatura manualmente.
 
-## Funcionalidades:
-### 1. Interface HTML:
-A interface HTML é a parte visual do sistema, onde você pode interagir com os dispositivos de ar condicionado conectados. Ela exibe informações sobre os dispositivos, como seu estado atual (ligado/desligado) e temperatura, e permite controlar esses dispositivos enviando comandos através de botões.
+* Envio de Dados via UDP:
+O Dispositivo periodicamente envia seus dados captados para o Broker através de mensagens UDP. Esses dados são enviados em formato de string concatenada, contendo informações como o status atual do ar condicionado e sua temperatura.
 
-Obter Lista de Dispositivos: Ao clicar neste botão, a interface solicita ao servidor uma lista atualizada de dispositivos conectados.
-Botões de Controle: Para cada dispositivo listado, há botões de controle, como "Ligar", "Desligar" e "Enviar Temperatura". Você pode utilizar esses botões para controlar o estado e a temperatura dos dispositivos.
-### 2. Broker.py:
-O broker.py desempenha um papel central no sistema, facilitando a comunicação entre a interface HTML e os dispositivos de ar condicionado. Aqui está uma explicação detalhada das principais funcionalidades do broker.py:
+* Verificação de Conexão:
+Para garantir a integridade da conexão, o Dispositivo verifica continuamente a comunicação com o Broker. Isso é feito enviando uma confirmação TCP sempre que uma mensagem é recebida com sucesso do Broker, garantindo uma conexão estável e confiável.
 
-Gestão de Conexões TCP e UDP: O broker.py utiliza sockets TCP e UDP para se comunicar com os dispositivos de ar condicionado. Ele estabelece conexões TCP com os dispositivos para enviar comandos e recebe atualizações de status, enquanto utiliza o UDP para receber atualizações de status dos dispositivos.
+# Interface
+A Interface é a camada através da qual os usuários interagem com os dispositivos IoT, proporcionando controle remoto e visualização do estado dos dispositivos. Aqui estão alguns detalhes adicionais sobre suas funcionalidades:
 
-Processamento de Mensagens HTTP e UDP: Quando a interface HTML envia uma solicitação HTTP, o broker.py a recebe e a processa. Ele extrai as informações relevantes da mensagem, como o tipo de comando (ligar, desligar, modificar temperatura) e o endereço IP do dispositivo alvo, e encaminha essas informações para o dispositivo apropriado via TCP. O broker.py também recebe mensagens UDP dos dispositivos de ar condicionado, contendo atualizações de status. Ele processa essas mensagens, atualiza a lista de dispositivos conectados e suas informações de estado e temperatura, e fornece essas informações à interface HTML para exibição.
+### Funcionalidades da Interface:
+* Obtenção e Exibição de Dispositivos:
+A Interface obtém regularmente uma lista de dispositivos conectados ao Broker e exibe suas informações, como endereço IP, porta TCP, estado atual (ligado/desligado) e temperatura.
+* Controle Remoto de Dispositivos:
+Os usuários podem interagir com os dispositivos através da Interface, enviando comandos como ligar, desligar e ajustar a temperatura. Quando um comando é selecionado, a Interface envia a mensagem correspondente para o Broker, que a encaminha para o dispositivo relevante.
+* Feedback ao Usuário:
+A Interface fornece feedback em tempo real sobre as ações realizadas. Por exemplo, se um usuário tentar ligar um dispositivo que já está ligado, a Interface informará ao usuário que o dispositivo já está ligado, garantindo uma experiência de usuário fluida e intuitiva.
 
-Gestão de Filas de Mensagens: Para lidar com o envio e recebimento assíncrono de mensagens, o broker.py utiliza filas de mensagens. As mensagens recebidas via UDP são colocadas em uma fila para processamento posterior, enquanto as mensagens HTTP recebidas da interface HTML são colocadas em outra fila para envio aos dispositivos via TCP.
+# Protocolos de Comunicação Utilizados:
+### Entre a Aplicação e o Servidor Broker: HTTP (Hypertext Transfer Protocol)
+O HTTP é um protocolo de comunicação amplamente utilizado para transferência de dados na World Wide Web. Ele opera em um modelo cliente-servidor, onde a aplicação age como cliente, enviando solicitações HTTP para o servidor Broker, que atua como servidor, respondendo a essas solicitações.
 
-### 3. Dispositivo.py:
-O dispositivo.py representa um dispositivo de ar condicionado simulado que se comunica com o broker.py para enviar seu status e receber comandos de controle. Aqui está uma explicação mais detalhada das principais funcionalidades do dispositivo.py:
+### Características do HTTP:
+* Stateless: O HTTP é um protocolo stateless, o que significa que não mantém informações sobre as conexões entre as solicitações. Cada solicitação HTTP é tratada de forma independente, sem conhecimento do contexto das solicitações anteriores.
 
-Comunicação com o Broker.py: O dispositivo.py utiliza sockets UDP para enviar periodicamente seu status (estado e temperatura) para o broker.py. Isso permite que o broker.py mantenha uma visão atualizada do estado de todos os dispositivos de ar condicionado conectados.
+### Entre os Dispositivos e o Servidor Broker: TCP (Transmission Control Protocol) e UDP (User Datagram Protocol)
 
-Envio de Status via UDP: Em intervalos regulares, o dispositivo.py envia uma mensagem UDP para o broker.py contendo seu status atual, incluindo se está ligado ou desligado e a temperatura configurada. Essa mensagem é formatada como "status-estado-temperatura" e enviada para o endereço IP e porta UDP do broker.py.
+Para a comunicação entre os dispositivos e o servidor Broker, são utilizados os protocolos TCP e UDP, cada um com suas características específicas:
+* TCP (Transmission Control Protocol):
+    * Orientado à Conexão: O TCP estabelece uma conexão confiável e orientada à conexão entre os dispositivos e o servidor Broker. Ele garante a entrega dos dados na ordem correta, sem perdas ou corrupção.
+    * Garantia de Entrega: O TCP utiliza mecanismos de confirmação e retransmissão para garantir que os dados sejam entregues com sucesso ao destino.
+* UDP (User Datagram Protocol):
+    * Não Orientado à Conexão: O UDP é um protocolo de comunicação não orientado à conexão, o que significa que não há estabelecimento prévio de conexão antes da transmissão dos dados.
+    * Menor Overhead: Comparado ao TCP, o UDP possui um menor overhead devido à ausência de mecanismos de garantia de entrega e controle de fluxo. Isso o torna mais adequado para aplicações onde a latência é crítica e a perda ocasional de dados é tolerável.
 
-Recepção de Comandos via TCP: O dispositivo.py também fica aguardando por comandos de controle enviados pelo broker.py via TCP. Ele mantém uma conexão TCP persistente com o broker.py, permitindo que receba comandos como "ligar", "desligar" e "modificar temperatura" em tempo real.
+## Camada de Aplicação
+A Camada de Aplicação é responsável por fornecer serviços de comunicação entre os diferentes dispositivos e interfaces do sistema. Ela define os protocolos e formatos de mensagem utilizados para a troca de informações e comandos entre os componentes do sistema.
 
-Tratamento de Mensagens TCP: Quando recebe uma mensagem TCP do broker.py, o dispositivo.py a decodifica e executa a ação correspondente. Por exemplo, se receber o comando "ligar", ele altera seu estado para "ligado". Da mesma forma, se receber o comando "desligar", altera seu estado para "desligado". Se receber o comando "modificar temperatura", ajusta a temperatura conforme especificado na mensagem.
+* Funcionalidades da Camada de Aplicação:
+    * Definição de Protocolos de Comunicação:
+    Na Camada de Aplicação, são definidos os protocolos de comunicação utilizados para facilitar a interação entre os dispositivos, interfaces e o Broker. Isso inclui o formato das mensagens, os tipos de dados suportados e os procedimentos para a troca de informações.
+* Processamento de Comandos:
+    * A Camada de Aplicação é responsável por interpretar os comandos recebidos das interfaces e encaminhá-los para os dispositivos correspondentes. Isso envolve o processamento de mensagens de controle, como ligar, desligar e ajustar a temperatura, e garantir que esses comandos sejam executados corretamente pelos dispositivos.
+* Gerenciamento de Dados:
+    * Além do processamento de comandos, a Camada de Aplicação também é responsável pelo gerenciamento e armazenamento de dados. Isso inclui a manutenção de informações sobre os dispositivos conectados, o registro de eventos e o histórico de operações realizadas.
 
-Gerenciamento de Conexão TCP: O dispositivo.py implementa uma lógica de reconexão para lidar com falhas na conexão TCP com o broker.py. Se a conexão for perdida, ele tenta reconectar automaticamente ao broker.py após um intervalo de tempo, garantindo uma comunicação contínua.
+## Camada de Transporte
+A Camada de Transporte é responsável por garantir a entrega confiável e eficiente das mensagens entre os dispositivos e o Broker. Ela define os protocolos e mecanismos utilizados para estabelecer e manter conexões de comunicação, bem como para controlar o fluxo e a integridade dos dados transmitidos.
 
-## Como Utilizar o Projeto
+Funcionalidades da Camada de Transporte:
+* Estabelecimento de Conexões:
+    * A Camada de Transporte é responsável por estabelecer conexões confiáveis entre os dispositivos e o Broker. Isso é feito através de protocolos como TCP, que garantem a entrega ordenada e confiável dos dados, e UDP, que oferece uma alternativa de baixa latência e menor overhead.
+* Controle de Fluxo:
+    * Para garantir uma comunicação eficiente, a Camada de Transporte controla o fluxo de dados entre os dispositivos e o Broker. Isso envolve o gerenciamento da taxa de transmissão de dados, a prevenção de congestionamentos na rede e a garantia de uma transferência suave e contínua das informações.
+* Manutenção da Conexão:
+    * Além de estabelecer conexões, a Camada de Transporte também é responsável por manter e monitorar ativamente a integridade das conexões existentes. Isso inclui a detecção e o tratamento de falhas na rede, a retransmissão de dados quando perdidos e a garantia de uma comunicação contínua e estável entre os dispositivos e o Broker.
+## Conclusão
+## Manual de uso 
 ### Primeiro passo: Inicialização Broker
 - É necessário a instalação das bibliotecas dependentes nesse caso os com o seguintes comando no prompt de comando:
   ```
@@ -78,6 +115,38 @@ Gerenciamento de Conexão TCP: O dispositivo.py implementa uma lógica de recone
 - Utilize a caixa de seleção de temperatura e em seguida o botão Enviar Temperatura para modificar a temperatura
 
 - É necessário ressaltar que não é impossível alterar a temperatura de um dispositivo desligado
+## Execução via Docker
+Para executar sem precisar contruir uma imagem, já existe uma imagem feita que está hospedada no site https://www.docker.com/
 
+*Siga pos seguintes passos para executar o broker:*
 
+* `docker pull joaogabrielaraujo/broker`
+* `docker run --network=host -it -e IP=<ip do servidor> joaogabrielaraujo/broker `
+
+Com isso o broker já estará rodando
+
+*Para emular o dispositivo:*
+* `docker pull joaogabrielaraujo/device`
+* `docker run --network=host -it -e SERVER_IP=<ip do servidor> joaogabrielaraujo/device`
+
+*Para executar a interface gráfica*
+* `git clone https://github.com/joaogabrielaraujo/Tec502-PBL1`
+<div>
+  <img  src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/rota PBL.jpg">
 </div>
+
+* Navegue até a pasta PBL
+<div>
+  <img  src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/rota Interface.jpg">
+</div>
+<div>
+  <img  src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/rota arquivo_interface.jpg">
+</div>
+
+
+* Continue pela pasta Interface e dê dois clicks no arquivo `interface.html` para abrir o navedor que estive utilizando a interface 
+
+<div>
+  <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/tela.jpg">
+</div>
+
