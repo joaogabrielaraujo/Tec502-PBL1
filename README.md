@@ -3,8 +3,10 @@
   Projeto da disciplina TEC 502 - Concorrência e Conectividade
   <br>
 </h1>
+<div>
 
-
+# Descrição do projeto 
+O projeto consiste em um sistema de controle e monitoramento de dispositivos IoT (Internet das Coisas) que visa facilitar a interação entre usuários e dispositivos conectados. Através de uma interface intuitiva, os usuários podem monitorar o estado dos dispositivos, como ar-condicionado, e controlar suas operações remotamente. O sistema utiliza um servidor Broker como intermediário na comunicação entre a interface de usuário e os dispositivos, garantindo uma comunicação eficiente e segura
 # Broker
 O Broker é o componente central deste sistema, desempenhando um papel vital como intermediário na comunicação entre as interfaces e os dispositivos. Ele é responsável por facilitar a troca de mensagens entre essas duas entidades principais, garantindo uma comunicação eficaz e confiável.
 
@@ -42,6 +44,39 @@ A Interface obtém regularmente uma lista de dispositivos conectados ao Broker e
 Os usuários podem interagir com os dispositivos através da Interface, enviando comandos como ligar, desligar e ajustar a temperatura. Quando um comando é selecionado, a Interface envia a mensagem correspondente para o Broker, que a encaminha para o dispositivo relevante.
 * Feedback ao Usuário:
 A Interface fornece feedback em tempo real sobre as ações realizadas. Por exemplo, se um usuário tentar ligar um dispositivo que já está ligado, a Interface informará ao usuário que o dispositivo já está ligado, garantindo uma experiência de usuário fluida e intuitiva.
+# Uso de Threads
+Threads no Broker e no Dispositivo
+As threads desempenham um papel fundamental no projeto, tanto no Broker quanto no Dispositivo, permitindo a execução concorrente de várias tarefas de forma eficiente. Aqui está uma visão geral das threads utilizadas em cada componente:
+* No Broker:
+  * Thread de Aceitação de Conexões TCP (`tcp_thread`):
+  Responsável por aceitar novas conexões TCP dos dispositivos.
+  Esta thread fica em um loop infinito, aguardando novas conexões.
+  * Cada nova conexão é tratada por uma nova thread, garantindo a capacidade de lidar com múltiplas conexões simultaneamente.
+  * Thread de Gerenciamento de Conexões TCP:
+    Cada nova conexão TCP estabelecida com um dispositivo é tratada por uma thread dedicada.
+    Essas threads são responsáveis por registrar o dispositivo conectado, verificar periodicamente a conexão e processar as mensagens recebidas.
+  * Thread de Recebimento de Mensagens UDP(`handle_udp_connection`):
+    Responsável por receber as mensagens enviadas pelos dispositivos via UDP.
+
+    As mensagens recebidas são colocadas em uma fila para processamento posterior.
+  * Thread de Processamento de Mensagens UDP(`process_udp_thread`):
+    Fica em um loop infinito processando as mensagens recebidas via UDP.
+    As mensagens são analisadas e as informações relevantes são atualizadas no registro do dispositivo.
+  * Thread de Processamento de Mensagens HTTP(`http_thread`):
+    Responsável por processar as mensagens recebidas via HTTP a partir da interface de usuário.
+    As mensagens contêm comandos para controlar os dispositivos, como ligar, desligar e ajustar a temperatura.
+    Após o processamento, as mensagens são encaminhadas para os dispositivos correspondentes.
+  * Thread de Verificação de Conexão de Dispositivos(`verificação_conexão_thread`):
+    Periodicamente verifica o status de conexão dos dispositivos registrados.
+    Envia mensagens de verificação para os dispositivos e remove os dispositivos desconectados da lista de registros.
+* No Dispositivo:
+  * Thread de Envio de Informações via UDP(`envio_informações`):
+Responsável por enviar periodicamente as informações do dispositivo para o Broker via UDP.
+As informações incluem o estado atual do dispositivo e a temperatura.Garante uma comunicação contínua e atualizada com o Broker.
+  * Thread de Tratamento de Mensagens TCP(`receive_thread`):
+Fica em um loop infinito aguardando mensagens TCP do Broker.
+As mensagens recebidas são processadas e as ações correspondentes são executadas no dispositivo, como ligar, desligar ou ajustar a temperatura.
+
 
 # Protocolos de Comunicação Utilizados:
 ### Entre a Aplicação e o Servidor Broker: HTTP (Hypertext Transfer Protocol)
@@ -150,3 +185,4 @@ Com isso o broker já estará rodando
   <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/tela.jpg">
 </div>
 
+</div>
