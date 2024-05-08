@@ -12,7 +12,7 @@
 # Descrição do projeto 
 O projeto consiste em um sistema de controle e monitoramento de dispositivos IoT (Internet das Coisas) que visa facilitar a interação entre usuários e dispositivos conectados. Através de uma interface intuitiva, os usuários podem monitorar o estado dos dispositivos, como ar-condicionado, e controlar suas operações remotamente. O sistema utiliza um servidor Broker como intermediário na comunicação entre a interface de usuário e os dispositivos, garantindo uma comunicação eficiente e segura
 <div>
-  <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/esquema1.png">
+  <img width="800px" align="center" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/esquema1.png">
 </div>
 
 # Broker
