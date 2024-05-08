@@ -10,6 +10,7 @@ O projeto consiste em um sistema de controle e monitoramento de dispositivos IoT
 <div>
   <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/esquema1.png">
 </div>
+
 # Broker
 O Broker é o componente central deste sistema, desempenhando um papel vital como intermediário na comunicação entre as interfaces e os dispositivos. Ele é responsável por facilitar a troca de mensagens entre essas duas entidades principais, garantindo uma comunicação eficaz e confiável.
 
