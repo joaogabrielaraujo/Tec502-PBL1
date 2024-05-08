@@ -44,6 +44,10 @@ A Interface obtém regularmente uma lista de dispositivos conectados ao Broker e
 Os usuários podem interagir com os dispositivos através da Interface, enviando comandos como ligar, desligar e ajustar a temperatura. Quando um comando é selecionado, a Interface envia a mensagem correspondente para o Broker, que a encaminha para o dispositivo relevante.
 * Feedback ao Usuário:
 A Interface fornece feedback em tempo real sobre as ações realizadas. Por exemplo, se um usuário tentar ligar um dispositivo que já está ligado, a Interface informará ao usuário que o dispositivo já está ligado, garantindo uma experiência de usuário fluida e intuitiva.
+<div>
+  <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/tela.jpg">
+</div>
+
 # Uso de Threads
 Threads no Broker e no Dispositivo
 As threads desempenham um papel fundamental no projeto, tanto no Broker quanto no Dispositivo, permitindo a execução concorrente de várias tarefas de forma eficiente. Aqui está uma visão geral das threads utilizadas em cada componente:
