@@ -11,7 +11,7 @@
 
 # Descrição do projeto 
 O projeto consiste em um sistema de controle e monitoramento de dispositivos IoT (Internet das Coisas) que visa facilitar a interação entre usuários e dispositivos conectados. Através de uma interface intuitiva, os usuários podem monitorar o estado dos dispositivos, como ar-condicionado, e controlar suas operações remotamente. O sistema utiliza um servidor Broker como intermediário na comunicação entre a interface de usuário e os dispositivos, garantindo uma comunicação eficiente e segura
-<div>
+<div align ="center">
   <img width="800px" align="center" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/esquema1.png">
 </div>
 
@@ -52,7 +52,7 @@ A Interface obtém regularmente uma lista de dispositivos conectados ao Broker e
 Os usuários podem interagir com os dispositivos através da Interface, enviando comandos como ligar, desligar e ajustar a temperatura. Quando um comando é selecionado, a Interface envia a mensagem correspondente para o Broker, que a encaminha para o dispositivo relevante.
 * Feedback ao Usuário:
 A Interface fornece feedback em tempo real sobre as ações realizadas. Por exemplo, se um usuário tentar ligar um dispositivo que já está ligado, a Interface informará ao usuário que o dispositivo já está ligado, garantindo uma experiência de usuário fluida e intuitiva.
-<div>
+<div align="center">
   <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/tela.jpg">
 </div>
 
@@ -180,7 +180,7 @@ Em resumo, o projeto mostra como os dispositivos IoT, o Broker e a interface do 
 - É necessário acessar o html em um navegador
 
 - Deve-se verificar se a interface está configurada com o URL e porta corretas
-<div>
+<div align="center">
   <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/tela.jpg">
 </div>
 
@@ -207,15 +207,15 @@ Com isso o broker já estará rodando
 
 *Para executar a interface gráfica*
 * `git clone https://github.com/joaogabrielaraujo/Tec502-PBL1`
-<div>
+<div align="center">
   <img  src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/rota PBL.jpg">
 </div>
 
 * Navegue até a pasta PBL
-<div>
+<div align="center">
   <img  src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/rota Interface.jpg">
 </div>
-<div>
+<div align="center">
   <img  src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/rota arquivo_interface.jpg">
 </div>
 
