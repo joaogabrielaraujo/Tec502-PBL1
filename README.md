@@ -4,8 +4,9 @@
   <br>
 </h1>
 <div>
-<div> > Este projeto foi desenvolvido como parte da disciplina MI - Concorrência e Conectividade, do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana (UEFS).
-</div>
+ 
+> Este projeto foi desenvolvido como parte da disciplina MI - Concorrência e Conectividade, do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana (UEFS).
+
 
 
 # Descrição do projeto 
