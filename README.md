@@ -52,6 +52,34 @@ A Interface fornece feedback em tempo real sobre as ações realizadas. Por exem
   <img width="800px" src="https://github.com/joaogabrielaraujo/Tec502-PBL1/blob/main/img/tela.jpg">
 </div>
 
+# API
+A API neste projeto atua como uma ponte entre a aplicação cliente e o servidor Broker, facilitando a comunicação e o controle dos dispositivos IoT. Aqui está como a API é implementada e utilizada:
+
+Endpoints:
+
+* Obtenção de Dispositivos Conectados:
+  * O endpoint /tcp-clients/ é utilizado pela aplicação cliente para obter uma lista dos dispositivos IoT conectados ao servidor Broker. Essa lista inclui informações como endereço IP, porta TCP, estado atual (ligado/desligado) e temperatura dos dispositivos.
+
+```
+   # Exemplo de resposta do endpoint /tcp-clients/
+[
+    {
+        "ip": "192.168.1.100",
+        "port": 5000,
+        "status": "ligado",
+        "temperatura": 25
+    },
+    {
+        "ip": "192.168.1.101",
+        "port": 5001,
+        "status": "desligado",
+        "temperatura": 0
+    }
+]
+ ``` 
+* Envio de Comandos para Dispositivos:
+  * O endpoint /send-message/ permite que a aplicação cliente envie comandos para controlar os dispositivos conectados. Os comandos disponíveis incluem ligar, desligar e ajustar a temperatura do dispositivo. As mensagens são enviadas no formato JSON e incluem informações sobre o tipo de comando, o endereço IP do dispositivo, a porta TCP e outros parâmetros necessários.
+
 # Uso de Threads
 Threads no Broker e no Dispositivo
 As threads desempenham um papel fundamental no projeto, tanto no Broker quanto no Dispositivo, permitindo a execução concorrente de várias tarefas de forma eficiente. Aqui está uma visão geral das threads utilizadas em cada componente:
