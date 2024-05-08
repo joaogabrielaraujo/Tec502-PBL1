@@ -124,6 +124,7 @@ Funcionalidades da Camada de Transporte:
 * Manutenção da Conexão:
     * Além de estabelecer conexões, a Camada de Transporte também é responsável por manter e monitorar ativamente a integridade das conexões existentes. Isso inclui a detecção e o tratamento de falhas na rede, a retransmissão de dados quando perdidos e a garantia de uma comunicação contínua e estável entre os dispositivos e o Broker.
 ## Conclusão
+Em resumo, o projeto mostra como os dispositivos IoT, o Broker e a interface do usuário se comunicam de maneira eficiente. O uso de diferentes protocolos de comunicação, como HTTP, TCP e UDP, garante uma interação confiável entre os componentes. As threads são usadas para permitir a execução simultânea de várias tarefas em cada parte do sistema. A API simplifica o acesso aos recursos do sistema, facilitando o desenvolvimento de aplicativos. Em conjunto, esses elementos criam um sistema capaz de lidar com as demandas de conectividade e controle em ambientes IoT de forma eficaz e escalável.
 ## Manual de uso 
 ### Primeiro passo: Inicialização Broker
 - É necessário a instalação das bibliotecas dependentes nesse caso os com o seguintes comando no prompt de comando:
