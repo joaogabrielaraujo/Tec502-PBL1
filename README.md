@@ -4,6 +4,9 @@
   <br>
 </h1>
 <div>
+<div> > Este projeto foi desenvolvido como parte da disciplina MI - Concorrência e Conectividade, do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana (UEFS).
+</div>
+
 
 # Descrição do projeto 
 O projeto consiste em um sistema de controle e monitoramento de dispositivos IoT (Internet das Coisas) que visa facilitar a interação entre usuários e dispositivos conectados. Através de uma interface intuitiva, os usuários podem monitorar o estado dos dispositivos, como ar-condicionado, e controlar suas operações remotamente. O sistema utiliza um servidor Broker como intermediário na comunicação entre a interface de usuário e os dispositivos, garantindo uma comunicação eficiente e segura
